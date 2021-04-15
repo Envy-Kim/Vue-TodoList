@@ -28,7 +28,7 @@ input {
   padding: 10px 18px;
   font-size: 15px;
   border-radius: 50px;
-  background-color: rgba(255,255,255,.8);
+  background-color: rgba(255,255,255,.5);
   box-shadow: 0 10px 10px rgba(0,0,0,.2);
   &::placeholder {
     font-size: 14px;

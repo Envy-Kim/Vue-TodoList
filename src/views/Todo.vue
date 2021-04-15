@@ -42,14 +42,12 @@ export default {
 /* input area */
 .input-box {
   position: relative;
-  input {
-
-  }
   button {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     bottom: 0;
+    margin: auto;
   }
 }
 
