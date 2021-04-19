@@ -1,13 +1,13 @@
 <template>
   <header>
     <h1>Kyoungsik's Childern</h1>
-    <span class="date">4/16 금</span>
+    <span class="date">{{$moment().format('MM/DD ddd')}}</span>
   </header>
 </template>
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
 }
 </script>
 

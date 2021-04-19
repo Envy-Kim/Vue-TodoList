@@ -2,6 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import vueMoment from 'vue-moment'
+import moment from 'moment'
+
+moment.locale('ko')
+Vue.use(vueMoment, { moment })
 
 Vue.config.productionTip = false
 
