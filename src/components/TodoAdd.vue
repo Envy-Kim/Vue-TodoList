@@ -31,7 +31,15 @@ export default {
       if( this.text === null ) {
         alert('텍스트를 입력해주세요.')
       } else {
-        this.$emit('listAdd', this.text)
+        console.log('text ::', this.text);
+        let todo = {
+          title: this.text,
+          completed: false,
+          // moment 시간 가공해주기
+          created_at: this.$moment()
+        }
+        this.$store.dispatch('addTodo', todo);
+        this.text = '';
       }
     }
   },

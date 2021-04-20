@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <input 
-      :type="type"
-      :placeholder="placeholder"
-      @input="change">
-  </div>
+  <input 
+    :type="type"
+    :placeholder="placeholder"
+    @input="change">
 </template>
 
 <script>
@@ -36,7 +34,7 @@ input {
   font-size: 15px;
   border-radius: 50px;
   background-color: rgba(255,255,255,.5);
-  box-shadow: 0 10px 10px rgba(0,0,0,.2);
+  box-shadow: 0 10px 10px rgba(0,0,0,.1);
   &::placeholder {
     font-size: 14px;
     color: #fff;

@@ -6,7 +6,7 @@
           v-model="item.completed"
           @input="toggleCompleted(item)"
       />
-      <span>{{ $moment(item.created_at).format('MM/DD(ddd)') }}</span>
+      <span>{{ $moment(item.created_at).format('MM/DD HH:mm:ss(ddd)') }}</span>
     </div>
     <button class="destroy" @click="removeTodo(item)"></button>
   </div>

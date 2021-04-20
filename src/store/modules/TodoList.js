@@ -1,14 +1,13 @@
-// todo: 추후에 localStorage에서 가져오도록 수정 필요
-let todoList = [];
-
 export default {
   state: {
-    list: todoList,
+    list: localStorage.getItem('todo-list')
+      // 문자를 객체로
+      ? JSON.parse(localStorage.getItem('todo-list'))
+      : [],
     // localStorage에 리스트 필터가 존재하면 가져오고 없을 경우의 기본값은 all
     listFilter: localStorage.getItem("todo-filter")
       ? localStorage.getItem("todo-filter")
       : "all",
-    // 날짜 정렬에 사용할 변수를 만들어주세요. 자료형: string, 값: desc(내림차순), asc(오름차순)
   },
   getters: {
     getTodoList(state) {
@@ -61,6 +60,11 @@ export default {
           : 0;
       });
     },
+    addTodo(state, item) {
+      state.list.push(item);
+      // 객체를 문자로
+      localStorage.setItem('todo-list', JSON.stringify(state.list));
+    }
   },
   actions: {
     setFilter({ commit }, filter) {
@@ -79,7 +83,9 @@ export default {
     },
 
     // 데이터 추가
-    addTodo() {},
+    addTodo({ commit }, item) {
+      commit('addTodo', item)
+    },
 
     // 전체 삭제.
     clearAll() {},

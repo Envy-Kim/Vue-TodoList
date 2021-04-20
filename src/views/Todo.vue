@@ -9,10 +9,7 @@
     </div>
     <!-- 상단 정보 End -->
 
-    <!-- input box(s) -->    
-    <todoAdd 
-      @listAdd="listAdd"/>
-    <!-- input box(e) -->
+    <todoAdd />
 
     <!-- list에 대한 컨트롤 부분 (s) : 추후 컴포넌트로 뺄지 고민 중 -->
     <div>
@@ -73,14 +70,6 @@ export default {
     listClearAll() {
       alert('전체 삭제 기능 추가 예정')
     },
-
-    /**
-     * 인풋 텍스트 리스트 추가
-     */
-    listAdd(text) {
-      this.todoList.push({title: text});
-      console.log(this.todoList);
-    }
   }
 }
 </script>
@@ -111,17 +100,5 @@ export default {
       }
     }
   }
-
-/* input area */
-.input-box {
-  position: relative;
-  button {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    bottom: 0;
-    margin: auto;
-  }
-}
 
 </style>
