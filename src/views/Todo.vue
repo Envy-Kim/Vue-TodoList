@@ -9,15 +9,9 @@
     </div>
     <!-- 상단 정보 End -->
 
-    <!-- input box(s) -->
-    <div class="input-box">
-      <TodoInput
-      type="text"
-      placeholder="Please enter text here"/>
-      <todo-button>
-        <img src="@/assets/images/btn_go.png" alt="">
-      </todo-button>
-    </div>
+    <!-- input box(s) -->    
+    <todoAdd 
+      @listAdd="listAdd"/>
     <!-- input box(e) -->
 
     <!-- list에 대한 컨트롤 부분 (s) : 추후 컴포넌트로 뺄지 고민 중 -->
@@ -36,21 +30,20 @@
 
 <script>
 import BaseLayout from '@/layouts/todo/Index'
-import TodoInput from '@/components/TodoInput'
-import TodoButton from '@/components/TodoButton'
+import TodoAdd from '@/components/TodoAdd'
 import TodoSelect from '@/components/TodoSelect'
 import TodoList from '@/components/TodoList'
 
 export default {
   name: "Todo",
   components: {
-    BaseLayout, TodoInput, TodoButton, TodoSelect, TodoList
+    BaseLayout, TodoAdd, TodoSelect, TodoList
   },
   data() {
     return {
       am : 'Good morning!',
       pm : 'Good afternoon!',
-      listFilter: this.$store.state.Todo.listFilter
+      listFilter: this.$store.state.Todo.listFilter,
     }
   },
   computed: {
@@ -79,6 +72,14 @@ export default {
     },
     listClearAll() {
       alert('전체 삭제 기능 추가 예정')
+    },
+
+    /**
+     * 인풋 텍스트 리스트 추가
+     */
+    listAdd(text) {
+      this.todoList.push({title: text});
+      console.log(this.todoList);
     }
   }
 }

@@ -2,7 +2,8 @@
   <div>
     <input 
       :type="type"
-      :placeholder="placeholder">
+      :placeholder="placeholder"
+      @input="change">
   </div>
 </template>
 
@@ -18,7 +19,13 @@ export default {
       type: String,
       default: ''
     }
+  },
+  methods: {
+    change: function($event) {
+      this.$emit('input', $event.target.value)
+    }
   }
+  
 }
 </script>
 
