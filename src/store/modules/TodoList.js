@@ -1,31 +1,5 @@
 // todo: 추후에 localStorage에서 가져오도록 수정 필요
-let todoList = [
-  {
-    title: "리스트 컴포넌트 만들기",
-    created_at: "2021-04-18 15:00:00",
-    completed: false,
-  },
-  {
-    title: "vue todo 리스트 구조설계",
-    created_at: "2021-04-14 20:00:00",
-    completed: true,
-  },
-  {
-    title: "Vuex 적용",
-    created_at: "2021-04-19 12:00:00",
-    completed: false,
-  },
-  {
-    title: "Vuex 적용",
-    created_at: "2021-04-15 12:00:00",
-    completed: false,
-  },
-  {
-    title: "Vuex 적용",
-    created_at: "2021-04-12 12:00:00",
-    completed: false,
-  },
-];
+let todoList = [];
 
 export default {
   state: {
