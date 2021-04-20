@@ -3,7 +3,7 @@
     <input type="checkbox"
            :id="_id"
            :value="value"
-           :checked="checked"
+           :checked="_checked"
            @input="change"
     >
     <label :for="_id">{{ label }}</label>
@@ -39,6 +39,13 @@ export default {
     _id: function () {
       return (this.id) ? this.id : 'input-' + this._uid
     },
+    _checked: function () {
+      return (this.checked)
+          ? this.checked
+          : (typeof this.inputValue == 'boolean')
+              ? this.inputValue
+              : false
+    }
   },
   methods: {
     change($event) {

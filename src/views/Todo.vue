@@ -2,9 +2,9 @@
   <base-layout>
     <!-- 상단 정보 Start -->
     <div class="top">
-      <p class="time-text">Good morning! afternoon! evening! night!</p>
+      <p class="time-text">{{ message }}</p>
       <p class="tasks-count">
-        <span><em>2</em>/4</span> 완료!
+        <span><em>{{ todoListCompleted }}</em>/{{ todoListAll }}</span> 완료!
       </p>
     </div>
     <!-- 상단 정보 End -->
@@ -48,12 +48,28 @@ export default {
   },
   data() {
     return {
+      am : 'Good morning!',
+      pm : 'Good afternoon!',
       listFilter: this.$store.state.Todo.listFilter
     }
   },
   computed: {
     todoList() {
       return this.$store.getters.getTodoList
+    },
+    todoListAll() {
+      return this.$store.getters.getTodoListAll
+    },
+    todoListCompleted() {
+      return this.$store.getters.getTodoListCompleted
+    },
+    message() {
+      const now = this.$moment().format('A');
+      if (now === '오전') {
+        return this.am
+      } else {
+        return this.pm
+      }
     }
   },
   methods: {
@@ -69,6 +85,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .top {
+    padding: 0 1rem;
+    color: #fff;
+  
+    .time-text {
+      margin-top: 3rem;
+      font-size: 0.8rem;
+    }
+  
+    .tasks-count {
+      margin: 3rem 0 2rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    
+      span {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 2.5rem;
+        letter-spacing: 0.3rem;
+      
+        em {
+          color: rgba(255, 255, 255, 1);
+        }
+      }
+    }
+  }
 
 /* input area */
 .input-box {

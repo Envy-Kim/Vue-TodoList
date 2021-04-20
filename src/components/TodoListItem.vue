@@ -4,7 +4,8 @@
       <TodoCheckbox
           :label="item.title"
           v-model="item.completed"
-          :checked="item.completed"/>
+          @input="toggleCompleted(item)"
+      />
       <span>{{ $moment(item.created_at).format('MM/DD(ddd)') }}</span>
     </div>
     <button class="destroy" @click="removeTodo(item)"></button>
@@ -25,10 +26,11 @@ export default {
   },
   methods: {
     removeTodo(item) {
-      console.log(item)
-      alert('리스트 아이템 삭제 예정')
-      // 리스트 아이템 삭제 코드
+      this.$store.dispatch('clear', item)
     },
+    toggleCompleted(item) {
+      this.$store.dispatch('toggleTodo', item)
+    }
   }
 }
 </script>

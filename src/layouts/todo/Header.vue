@@ -1,13 +1,20 @@
 <template>
   <header>
     <h1>Kyoungsik's Childern</h1>
-    <span class="date">{{$moment().format('MM/DD ddd')}}</span>
+    <span class="date">{{ today }}</span>
   </header>
 </template>
 
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      // 오늘 날짜를 moment를 이용해서 가져와 월/일 (요일) 포멧으로 변환
+      today : this.$moment().format('MM/DD (ddd)'),
+    }
+  }
+  
 }
 </script>
 
