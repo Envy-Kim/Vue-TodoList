@@ -3,7 +3,8 @@
     <TodoInput
       v-model="text"
       type="text"
-      placeholder="Please enter text here"/>
+      placeholder="Please enter text here"
+      @enter="listAdd"/>
     <todo-button
       @click.native="listAdd">
       <img src="@/assets/images/btn_go.png" alt="">
@@ -31,19 +32,16 @@ export default {
       if( this.text === null ) {
         alert('텍스트를 입력해주세요.')
       } else {
-        console.log('text ::', this.text);
         let todo = {
           title: this.text,
           completed: false,
-          // moment 시간 가공해주기
           created_at: this.$moment()
         }
-        this.$store.dispatch('addTodo', todo);
-        this.text = '';
+        this.$store.dispatch('addTodo', todo)
+        this.text = null
       }
     }
-  },
-  
+  },  
 }
 </script>
 

@@ -1,8 +1,10 @@
 <template>
   <input 
     :type="type"
+    :value="value"
     :placeholder="placeholder"
-    @input="change">
+    @input="change"
+    @keyup.enter="$emit('enter')">
 </template>
 
 <script>
@@ -10,6 +12,10 @@ export default {
   name: "TodoInput",
   props: {
     type: {
+      type: String,
+      default: ''
+    },
+    value: {
       type: String,
       default: ''
     },
@@ -21,7 +27,7 @@ export default {
   methods: {
     change: function($event) {
       this.$emit('input', $event.target.value)
-    }
+    },
   }
   
 }
