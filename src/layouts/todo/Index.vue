@@ -12,7 +12,7 @@ import BaseFooter from '@/layouts/todo/Footer'
 
 export default {
   name: "Index",
-  components: { BaseHeader, BaseFooter}
+  components: {BaseHeader, BaseFooter}
 }
 </script>
 

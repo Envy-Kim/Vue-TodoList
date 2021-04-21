@@ -16,7 +16,7 @@ import '@/assets/font/font.css';
 import '@/assets/css/reset.css';
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

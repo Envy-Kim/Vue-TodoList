@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     change($event) {
-      if(this.inputValue instanceof Array) {
+      if (this.inputValue instanceof Array) {
         // 다중선택 체크박스인 경우 값을 배열로 반환
 
         // v-model과 연결된 value(Array)를 checkArr 배열에 할당
@@ -92,7 +92,7 @@ export default {
     }
 
     &:checked {
-      +label {
+      + label {
         text-decoration-line: line-through;
         color: #d9d9d9;
 

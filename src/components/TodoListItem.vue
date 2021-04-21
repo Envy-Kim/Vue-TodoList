@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import TodoCheckbox from "@/components/TodoCheckbox";
+import TodoCheckbox from "@/components/TodoCheckbox"
 
 export default {
   name: "TodoListItem",
