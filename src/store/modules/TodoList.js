@@ -1,14 +1,14 @@
 export default {
     state: {
-        // 로컬 스토리지가 todolist가 있을 경우 가져와서 json pasing을 진행 없을 경우, 기본값은 빈 배열
-        list: localStorage.getItem('todo-list')
-            ? JSON.parse(localStorage.getItem('todo-list'))
-            : [],
-
-        // 로컬 스토리지에 리스트 필터가 존재하면 가져오고 없을 경우의 기본값은 all
-        listFilter: localStorage.getItem("todo-filter")
-            ? localStorage.getItem("todo-filter")
-            : "all",
+        /**
+         * list: [{
+         *     title: String,
+         *     completed: Boolean,
+         *     created_at: Date
+         * }]
+         */
+        list: [],
+        listFilter: "all",
     },
     getters: {
         getTodoList(state) {
@@ -33,6 +33,9 @@ export default {
         setFilter(state, filter) {
             state.listFilter = filter
         },
+        setTodoList(state, todoList) {
+          state.list = todoList
+        },
         toggleTodo(state, todo) {
             const index = state.list.indexOf(todo);
             if (index > -1) {
@@ -49,7 +52,10 @@ export default {
         },
         listClearAll(state) {
             state.list.splice(0)
-            localStorage.clear()
+
+            // clear()는 localStorage에 있는 모든 데이터를 비운다.
+            // 원하는 데이터만 삭제할때는 removeItem()을 사용
+            localStorage.removeItem('todo-list')
         },
         orderByDateAsc(state) {
             state.list.sort(function (a, b) {
@@ -83,6 +89,10 @@ export default {
             localStorage.setItem("todo-filter", filter)
         },
 
+        setTodoList({commit}, todoList) {
+            commit("setTodoList", todoList)
+        },
+
         // 날짜 정렬(오름차순) // action을 사용하지 않고 getter에 만들어서 호출하는 방법도 있음
         orderByDateAsc({commit}) {
             commit("orderByDateAsc")
@@ -104,7 +114,7 @@ export default {
         },
 
         // list item 하나에 대한 삭제
-        clear({commit}, todo) {
+        removeTodo({commit}, todo) {
             commit("removeTodo", todo)
         },
 

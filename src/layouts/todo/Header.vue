@@ -1,7 +1,13 @@
 <template>
   <header>
     <h1>Kyoungsik's Childern</h1>
-    <span class="date">{{ today }}</span>
+    <div class="today">
+      <span class="year">{{ year }}</span>
+      <span class="month-day">
+        {{ month }}.{{ day }}
+        <span class="date">{{ date }}</span>
+      </span>
+    </div>
   </header>
 </template>
 
@@ -11,7 +17,10 @@ export default {
   data() {
     return {
       // 오늘 날짜를 moment를 이용해서 가져와 월/일 (요일) 포멧으로 변환
-      today: this.$moment().format('MM/DD (ddd)'),
+      year: this.$moment().format('YYYY'),
+      month: this.$moment().format('MM'),
+      day: this.$moment().format('DD'),
+      date: this.$moment().format('ddd'),
     }
   }
 }
@@ -19,21 +28,28 @@ export default {
 
 <style lang="scss" scoped>
 header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem;
   color: #fff;
-
   h1 {
     font-size: 1.2rem;
     text-shadow: 2px 2px 2px gray;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
   }
-
-  .date {
-    font-size: 0.8rem;
+  .today {
+    margin-top:3rem;
+    line-height:1.3;
+    .year{
+      display:block;
+      font-size:0.8rem;
+      opacity:0.6;
+    }
+    .month-day{
+      font-size:1.8rem;
+      .date{
+        font-size:0.8rem;
+      }
+    }
   }
 }
 </style>

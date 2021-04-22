@@ -6,7 +6,7 @@
           v-model="item.completed"
           @input="toggleCompleted(item)"
       />
-      <span>{{ $moment(item.created_at).format('MM/DD HH:mm:ss(ddd)') }}</span>
+      <span class="save-time">{{ $moment(item.created_at).format('MM/DD HH:mm:ss(ddd)') }}</span>
     </div>
     <button class="destroy" @click="removeTodo(item)"></button>
   </div>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     removeTodo(item) {
-      this.$store.dispatch('clear', item)
+      this.$store.dispatch('removeTodo', item)
     },
     toggleCompleted(item) {
       this.$store.dispatch('toggleTodo', item)
@@ -38,39 +38,32 @@ export default {
 <style lang="scss" scoped>
 .todo {
   position: relative;
-  font-size: 24px;
-  border: 1px solid #ededed;
-  background-color: #ffffff;
-
-  .view {
-    color: #7d7d7d;
-    font-size: 16px;
+  padding:0.5rem 0;
+  border-bottom:1px solid #fff;
+  &:last-child{
+    border-bottom:none;
+  }
+  .save-time{
+    display:inline-block;
+    margin-top:0.3rem;
+    font-size:0.6rem;
   }
 
   .destroy {
-    display: none;
     position: absolute;
-    top: 0;
-    right: 10px;
-    bottom: 0;
-    width: 40px;
-    height: 40px;
-    margin: auto 0;
-    font-size: 30px;
-    color: #de6f6f;
-
-    &::after {
-      content: 'x'
-    }
-
-    &:hover {
-      color: #f31919;
-    }
-  }
-
-  &:hover {
-    .destroy {
-      display: block;
+    top:50%;
+    right:0;
+    padding:0;
+    transform:translateY(-50%) rotate(45deg);
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(#ee5753, #ee5753), linear-gradient(#ee5753, #ee5753);
+      background-position: center;
+      background-size: 50% 2px,2px 50%;
+      background-repeat: no-repeat;
     }
   }
 }

@@ -6,8 +6,8 @@
                     :item="item"
       />
     </div>
-    <div v-else>
-      데이터가 없습니다.
+    <div class="nodata" v-else>
+      <p>데이터가 없습니다.</p>
     </div>
   </div>
 </template>
@@ -28,6 +28,15 @@ export default {
 
 <style lang="scss" scoped>
 .todo-list {
-  width: 100%;
+  background:rgba(255,255,255,.5);
+  margin:1rem;
+  padding:0.5rem;
+  .nodata{
+    padding:1rem 0;
+    text-align:center;
+    p{
+      font-size:0.8rem;
+    }
+  }
 }
 </style>
