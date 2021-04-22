@@ -4,7 +4,7 @@
       v-model="text"
       type="text"
       placeholder="Please enter text here"
-      @enter="listAdd"/>
+      @keyup.enter.native="listAdd"/>
     <todo-button
       @click.native="listAdd">
       <img src="@/assets/images/btn_go.png" alt="">
