@@ -1,5 +1,5 @@
 <template>
-  <div>Footer</div>
+  <div>Made by 김경식, 김유빈, 김효영, 이초이</div>
 </template>
 
 <script>
