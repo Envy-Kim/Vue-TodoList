@@ -28,14 +28,16 @@ export default {
 
 <style lang="scss" scoped>
 .todo-list {
-  background:rgba(255,255,255,.5);
-  margin:1rem;
-  padding:0.5rem;
-  .nodata{
-    padding:1rem 0;
-    text-align:center;
-    p{
-      font-size:0.8rem;
+  background: rgba(255, 255, 255, .5);
+  margin: 1rem;
+  padding: 0.5rem;
+
+  .nodata {
+    padding: 1rem 0;
+    text-align: center;
+
+    p {
+      font-size: 0.8rem;
     }
   }
 }

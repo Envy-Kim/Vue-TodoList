@@ -74,28 +74,31 @@ export default {
 
 <style lang="scss" scoped>
 .checkbox {
-  display:flex;
+  display: flex;
+
   input[type=checkbox] {
     + label {
-      display:flex;
-      align-items:center;
+      display: flex;
+      align-items: center;
+
       &:before {
         content: '';
-        display:inline-block;
+        display: inline-block;
         width: 20px;
         height: 20px;
-        margin-right:10px;
-        border-radius:50%;
-        border:1px solid #fff;
+        margin-right: 10px;
+        border-radius: 50%;
+        border: 1px solid #fff;
       }
     }
 
     &:checked {
       + label {
-        color:#fff;
+        color: #fff;
         text-decoration-line: line-through;
+
         &:before {
-          border:none;
+          border: none;
           background: url('~@/assets/images/checkbox.svg') no-repeat 0 0 / cover;
           filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(261deg) brightness(107%) contrast(102%);
         }
