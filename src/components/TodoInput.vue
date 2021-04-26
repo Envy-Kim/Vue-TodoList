@@ -3,13 +3,20 @@
     :type="type"
     :value="value"
     :placeholder="placeholder"
-    @input="change"
-  >
+    :class="{'active' : active}"
+    @focus="active = true"
+    @blur="active = false"
+    @input="change">
 </template>
 
 <script>
 export default {
   name: "TodoInput",
+  data() {
+    return {
+      active: false
+    }
+  },
   props: {
     type: {
       type: String,
@@ -22,7 +29,7 @@ export default {
     placeholder: {
       type: String,
       default: ''
-    }
+    },
   },
   methods: {
     change: function($event) {
@@ -40,10 +47,13 @@ input {
   font-size: 15px;
   border-radius: 50px;
   background-color: rgba(255,255,255,.5);
-  box-shadow: 0 10px 10px rgba(0,0,0,.1);
+  transition: all .3s;
   &::placeholder {
     font-size: 14px;
     color: #fff;
+  }
+  &.active {
+    box-shadow: 0 10px 10px rgba(0,0,0,.1);
   }
 }
 </style>
