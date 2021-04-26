@@ -11,9 +11,13 @@ Github Actions 사용<br/>
 자동으로 빌드 후 배포 중
 
 ## Hosting
-AWS S3와 CloudFront 사용
+~~AWS S3와 CloudFront 사용~~
 
-https://d1l5it9b6pwh04.cloudfront.net/
+~~https://d1l5it9b6pwh04.cloudfront.net/~~
+
+Github page를 이용
+
+https://envy-kim.github.io/Vue-Todolist
 
 ## Project setup
 ```
