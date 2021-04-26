@@ -9,28 +9,37 @@
       @click.native="listAdd">
       <img src="@/assets/images/btn_go.png" alt="">
     </todo-button>
+
+    <!-- modal -->
+    <todo-modal
+      v-show="modalOpen"
+      @close="modalClose">
+      내용을 입력해주세요.
+    </todo-modal>
   </div>
 </template>
 
 <script>
 import TodoInput from '@/components/TodoInput'
 import TodoButton from '@/components/TodoButton'
+import TodoModal from '@/components/TodoModal'
 
 export default {
   name: "TodoAdd",
-  components: { TodoInput, TodoButton },
+  components: { TodoInput, TodoButton, TodoModal },
   props: {
 
   },
   data() {
     return {
-      text: null
+      text: null,
+      modalOpen: this.$store.state.Todo.modal
     }
   },
   methods: {
     listAdd: function () {
       if( this.text === null ) {
-        alert('텍스트를 입력해주세요.')
+        this.$store.dispatch('Todo/modalOpen');
       } else {
         let todo = {
           title: this.text,
@@ -40,8 +49,14 @@ export default {
         this.$store.dispatch('Todo/addTodo', todo)
         this.text = null
       }
+    },
+    modalClose() {
+      this.modalOpen = false
     }
   },  
+  mounted() {
+    console.log('todoadd 상태', this.$store.state.Todo.modal)
+  }
 }
 </script>
 
