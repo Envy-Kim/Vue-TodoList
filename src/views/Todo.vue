@@ -49,13 +49,13 @@ export default {
   },
   computed: {
     todoList() {
-      return this.$store.getters.getTodoList
+      return this.$store.getters["Todo/getTodoList"]
     },
     todoListAll() {
-      return this.$store.getters.getTodoListAll
+      return this.$store.getters["Todo/getCountAllList"]
     },
     todoListCompleted() {
-      return this.$store.getters.getTodoListCompleted
+      return this.$store.getters["Todo/getCountCompletedList"]
     },
     message() {
       const now = this.$moment().format('A');
@@ -69,10 +69,10 @@ export default {
   methods: {
     setFilter(newFilter) {
       this.listFilter = newFilter
-      this.$store.dispatch('setFilter', newFilter)
+      this.$store.dispatch('Todo/setFilter', newFilter)
     },
     listClearAll() {
-      this.$store.dispatch('clearAll')
+      this.$store.dispatch('Todo/clearAll')
     },
   }
 }

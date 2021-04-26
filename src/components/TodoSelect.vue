@@ -1,8 +1,15 @@
 <template>
   <div class="order-select">
-    <select @change="orderByDate">
-      <option value="orderDesc" selected>최신 순</option>
-      <option value="orderAsc">오래된 순</option>
+    <select @change="orderByDate($event, $event.target.selectedIndex)">
+      <option
+        v-for="(item, index) in listSelect"
+        :key="`key-${index}`"
+        :value="item.type"
+        :selected="item.selected"
+        >{{ item.option }}</option
+      >
+      <!-- <option value="orderDesc" selected>최신 순</option>
+      <option value="orderAsc">오래된 순</option> -->
     </select>
   </div>
 </template>
@@ -11,16 +18,18 @@
 export default {
   name: "TodoSelect",
   methods: {
-    orderByDate(event) {
+    orderByDate(event, selectedIndex) {
       if (event.target.value === "orderDesc") {
-        this.$store.dispatch("orderByDateDesc");
+        this.$store.dispatch("Todo/orderByDateDesc", selectedIndex);
       } else if (event.target.value === "orderAsc") {
-        this.$store.dispatch("orderByDateAsc");
+        this.$store.dispatch("Todo/orderByDateAsc", selectedIndex);
       }
     },
   },
-  mounted() {
-    this.$store.dispatch("orderByDateDesc");
+  computed: {
+    listSelect() {
+      return this.$store.getters["Todo/getTodoSelect"];
+    },
   },
 };
 </script>
@@ -34,7 +43,8 @@ export default {
     width: 100px;
     padding: 5px;
     border: 1px solid #ddd;
-    background: #fff url("~@/assets/images/icon_arrow.svg") calc(100% - 5px) 5px no-repeat;
+    background: #fff url("~@/assets/images/icon_arrow.svg") calc(100% - 5px) 5px
+      no-repeat;
     background-size: 15px 15px;
     border-radius: 5px;
     font-size: 14px;

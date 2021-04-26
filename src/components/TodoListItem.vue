@@ -26,10 +26,10 @@ export default {
   },
   methods: {
     removeTodo(item) {
-      this.$store.dispatch('removeTodo', item)
+      this.$store.dispatch('Todo/removeTodo', item)
     },
     toggleCompleted(item) {
-      this.$store.dispatch('toggleTodo', item)
+      this.$store.dispatch('Todo/toggleTodo', item)
     }
   }
 }

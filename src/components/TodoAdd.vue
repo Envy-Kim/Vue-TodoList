@@ -37,7 +37,7 @@ export default {
           completed: false,
           created_at: this.$moment()
         }
-        this.$store.dispatch('addTodo', todo)
+        this.$store.dispatch('Todo/addTodo', todo)
         this.text = null
       }
     }
