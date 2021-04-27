@@ -11,17 +11,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-footer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(255, 255, 255, 0.5);
-  padding:1rem;
-  p{
-    font-size:0.8rem;
-    text-align:center;
-    color:#fff;
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 1rem;
+
+  p {
+    font-size: 0.8rem;
+    text-align: center;
+    color: #fff;
   }
 }
 </style>

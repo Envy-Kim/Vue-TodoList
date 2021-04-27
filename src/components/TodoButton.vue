@@ -1,5 +1,5 @@
 <template>
-  <button>            
+  <button class="button">
     <slot></slot>
   </button>
 </template>
@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-button {
+.button {
   display: inline-flex;
   justify-content: center;
   align-items: center;

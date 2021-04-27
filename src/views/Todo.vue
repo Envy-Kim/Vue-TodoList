@@ -7,7 +7,7 @@
         <span><em>{{ todoListCompleted }}</em>/{{ todoListAll }}</span> 완료!
       </p>
       <p class="tasks-count" v-else>LET'S GO TODO :)</p>
-      <TodoAdd />
+      <TodoAdd/>
     </div>
     <!-- 상단 정보 End -->
 
@@ -20,12 +20,23 @@
         <button @click="setFilter('completed')" :class="{active: listFilter === 'completed'}">Completed</button>
       </div>
       <div class="btn-del">
-        <button @click="listClearAll">Clear All</button>
+        <button @click="modalActive = true">Clear All</button>
       </div>
     </div>
     <!-- list에 대한 컨트롤 부분 (e) -->
 
     <TodoList :list="todoList"/>
+
+    <!-- modal -->
+    <todo-modal
+        v-show="modalActive"
+        @close="modalActive = false">
+      <p>전부 삭제하시겠어요?</p>
+      <div class="btn-box">
+        <button @click="listClearAll()">OK</button>
+      </div>
+    </todo-modal>
+
   </base-layout>
 </template>
 
@@ -34,21 +45,30 @@ import BaseLayout from '@/layouts/todo/Index'
 import TodoAdd from '@/components/TodoAdd'
 import TodoSelect from '@/components/TodoSelect'
 import TodoList from '@/components/TodoList'
+import TodoModal from '@/components/TodoModal'
 
 export default {
   name: "Todo",
   components: {
-    BaseLayout, TodoAdd, TodoSelect, TodoList
+    BaseLayout, TodoAdd, TodoSelect, TodoList, TodoModal
   },
   data() {
     return {
       am: 'Good morning!',
       pm: 'Good afternoon!',
       listFilter: this.$store.state.Todo.listFilter,
+      modalActive: false,
     }
   },
   computed: {
     todoList() {
+      /**
+       * module에 namespace를 주기 전 getters 사용
+       * this.$store.getters.getTodoList
+       *
+       * namespace 추가 후
+       * this.$store.getters["Todo/getTodoList"]
+       */
       return this.$store.getters["Todo/getTodoList"]
     },
     todoListAll() {
@@ -73,8 +93,9 @@ export default {
     },
     listClearAll() {
       this.$store.dispatch('Todo/clearAll')
+      this.modalActive = false
     },
-  }
+  },
 }
 </script>
 
@@ -84,7 +105,7 @@ export default {
   color: #fff;
 
   .time-text {
-    text-align:right;
+    text-align: right;
   }
 
   .tasks-count {
@@ -103,34 +124,59 @@ export default {
     }
   }
 }
-.btn-box{
-  padding:0 1rem;
-  .filter-box{
-    button{
-      padding:0.5rem;
-      margin-right:0.5rem;
-      color:#fff;
-      border-radius:10px;
-      text-transform:uppercase;
-      &.active{
-        background-color: rgba(255,255,255,.5);
-        box-shadow: 0 10px 10px rgba(0,0,0,.1);
+
+.btn-box {
+  padding: 0 1rem;
+
+  .filter-box {
+    button {
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+      color: #fff;
+      border-radius: 10px;
+      text-transform: uppercase;
+
+      &.active {
+        background-color: rgba(255, 255, 255, .5);
+        box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
       }
-      &:last-child{
-        margin-right:0;
+
+      &:last-child {
+        margin-right: 0;
       }
     }
   }
-  .btn-del{
-    text-align:right;
-    button{
-      padding:0.5rem;
-      font-size:0.8rem;
-      color:rgba(238,87,83,.8);
-      text-decoration:underline;
-      text-transform:uppercase;
+
+  .btn-del {
+    text-align: right;
+
+    button {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      color: rgba(238, 87, 83, .8);
+      text-decoration: underline;
+      text-transform: uppercase;
     }
   }
 }
 
+// modal 
+.modal-content {
+  p {
+    padding: 15px 0 30px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+    width: 75px;
+    height: 35px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #ee5753;
+    border-radius: 10px;
+  }
+}
 </style>

@@ -30,24 +30,29 @@ export default {
 header {
   padding: 1rem;
   color: #fff;
+
   h1 {
     font-size: 1.2rem;
     text-shadow: 2px 2px 2px gray;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
   }
+
   .today {
-    margin-top:3rem;
-    line-height:1.3;
-    .year{
-      display:block;
-      font-size:0.8rem;
-      opacity:0.6;
+    margin-top: 3rem;
+    line-height: 1.3;
+
+    .year {
+      display: block;
+      font-size: 0.8rem;
+      opacity: 0.6;
     }
-    .month-day{
-      font-size:1.8rem;
-      .date{
-        font-size:0.8rem;
+
+    .month-day {
+      font-size: 1.8rem;
+
+      .date {
+        font-size: 0.8rem;
       }
     }
   }

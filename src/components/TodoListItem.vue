@@ -8,29 +8,47 @@
       />
       <span class="save-time">{{ $moment(item.created_at).format('MM/DD HH:mm:ss(ddd)') }}</span>
     </div>
-    <button class="destroy" @click="removeTodo(item)"></button>
+    <button class="destroy" @click="modalActive = true"></button>
+
+    <!-- modal -->
+    <todo-modal
+        v-show="modalActive"
+        @close="modalActive = false">
+      <p>정말로 삭제하시겠어요?</p>
+      <button
+          @click="removeTodo(item)"
+      >OK
+      </button>
+    </todo-modal>
   </div>
 </template>
 
 <script>
 import TodoCheckbox from "@/components/TodoCheckbox"
+import TodoModal from '@/components/TodoModal'
 
 export default {
   name: "TodoListItem",
-  components: {TodoCheckbox},
+  components: {TodoCheckbox, TodoModal},
   props: {
     item: {
       type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      modalActive: false,
+    }
+  },
   methods: {
     removeTodo(item) {
       this.$store.dispatch('Todo/removeTodo', item)
+      this.modalActive = false
     },
     toggleCompleted(item) {
       this.$store.dispatch('Todo/toggleTodo', item)
-    }
+    },
   }
 }
 </script>
@@ -68,6 +86,26 @@ export default {
       background-size: 50% 2px, 2px 50%;
       background-repeat: no-repeat;
     }
+  }
+}
+
+// modal 
+.modal-content {
+  p {
+    padding: 15px 0 30px;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  button {
+    display: block;
+    margin: 0 auto;
+    width: 75px;
+    height: 35px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #ee5753;
+    border-radius: 10px;
   }
 }
 </style>

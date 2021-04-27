@@ -1,15 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+import TodoList from '@/store/modules/TodoList'
+import {TodoPlugin} from '@/store/TodoPlugin'
 
-import Todo from '@/store/modules/TodoList'
+Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {},
     mutations: {},
     actions: {},
     modules: {
-        Todo: Todo
-    }
+        // namespace 사용시 module을
+        Todo: TodoList
+    },
+    plugins: [TodoPlugin] // todolist에 대한 localStorage 처리를 담당하는 plugin
 })

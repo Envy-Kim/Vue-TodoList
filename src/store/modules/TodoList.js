@@ -50,24 +50,14 @@ export default {
         },
         toggleTodo(state, todo) {
             const index = state.list.indexOf(todo)
-            if (index > -1) {
-                state.list[index].completed = todo.completed
-                localStorage.setItem("todo-list", JSON.stringify(state.list))
-            }
+            if (index > -1) state.list[index].completed = todo.completed
         },
         removeTodo(state, todo) {
             const index = state.list.indexOf(todo)
-            if (index > -1) {
-                state.list.splice(index, 1)
-                localStorage.setItem("todo-list", JSON.stringify(state.list))
-            }
+            if (index > -1) state.list.splice(index, 1)
         },
         listClearAll(state) {
             state.list.splice(0)
-
-            // clear()는 localStorage에 있는 모든 데이터를 비운다.
-            // 원하는 데이터만 삭제할때는 removeItem()을 사용
-            localStorage.removeItem("todo-list")
         },
         orderByDateAsc(state, selectIndex) {
             state.list.sort(function (a, b) {
@@ -86,7 +76,6 @@ export default {
                 }
             }
             localStorage.setItem("todo-select", JSON.stringify(state.listSelect))
-            localStorage.setItem("todo-list", JSON.stringify(state.list))
         },
         orderByDateDesc(state, selectIndex) {
             state.list.sort(function (a, b) {
@@ -105,7 +94,6 @@ export default {
                 }
             }
             localStorage.setItem("todo-select", JSON.stringify(state.listSelect))
-            localStorage.setItem("todo-list", JSON.stringify(state.list))
         },
         addTodo(state, item) {
             if (state.listSelect[0].selected === true) {
@@ -113,9 +101,6 @@ export default {
             } else {
                 state.list.push(item)
             }
-            
-            // todolist 객체를 문자열로 만들어 로컬 스토리지에 저장
-            localStorage.setItem("todo-list", JSON.stringify(state.list))
         },
     },
     actions: {
