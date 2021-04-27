@@ -17,10 +17,7 @@
         :unit="'%'"
         @close="modalActive = false">
       <p>내용을 입력해주세요.</p>
-      <button
-          @click="modalActive = false"
-      >확인
-      </button>
+      <button @click="modalActive = false">확인</button>
     </todo-modal>
   </div>
 </template>
@@ -36,12 +33,15 @@ export default {
   data() {
     return {
       text: null,
-      modalActive: false
+      modalActive: false,
     }
   },
   methods: {
     listAdd: function () {
       if (this.text === null) {
+        this.modalActive = true
+      } else if(this.text.trim() === '') {
+        this.text = ''
         this.modalActive = true
       } else {
         let todo = {
