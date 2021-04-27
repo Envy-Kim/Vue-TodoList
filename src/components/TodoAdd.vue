@@ -13,6 +13,8 @@
     <!-- modal -->
     <todo-modal
         v-show="modalActive"
+        :width="(($device.windows) ? 15 : 60)"
+        :unit="'%'"
         @close="modalActive = false">
       <p>내용을 입력해주세요.</p>
       <button

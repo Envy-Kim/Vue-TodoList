@@ -30,10 +30,15 @@
     <!-- modal -->
     <todo-modal
         v-show="modalActive"
+        :width="(($device.windows) ? 15 : 60)"
+        :unit="'%'"
         @close="modalActive = false">
       <p>전부 삭제하시겠어요?</p>
-      <div class="btn-box">
-        <button @click="listClearAll()">OK</button>
+      <div class="btn-wrap">
+        <div class="btn-group">
+          <button @click="listClearAll()">Delete</button>
+          <button @click="modalActive = false">Cancel</button>
+        </div>
       </div>
     </todo-modal>
 
@@ -177,6 +182,19 @@ export default {
     font-size: 15px;
     background-color: #ee5753;
     border-radius: 10px;
+  }
+
+  .btn-wrap {
+    display: flex;
+    justify-content: center;
+
+    .btn-group {
+      display: flex;
+
+      button {
+        margin: 0 8px;
+      }
+    }
   }
 }
 </style>

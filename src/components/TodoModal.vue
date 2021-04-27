@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal">
-      <div class="modal-box">
+      <div class="modal-box" :style="{ width: width + unit}">
         <button
             @click.self="$emit('close')"
             class="btn-close">닫기
@@ -17,6 +17,15 @@
 <script>
 export default {
   name: "TodoModal",
+  props: {
+    width: {
+      type: Number,
+    },
+    unit: {
+      type: String,
+      default: 'px',
+    }
+  }
 }
 </script>
 
