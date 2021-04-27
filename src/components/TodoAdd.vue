@@ -12,9 +12,12 @@
 
     <!-- modal -->
     <todo-modal
-      v-show="modalOpen"
-      @close="modalClose">
-      내용을 입력해주세요.
+      v-show="modalActive"
+      @close="modalActive = false">
+      <p>내용을 입력해주세요.</p>
+      <button 
+        @click="modalActive = false"
+        >확인</button>
     </todo-modal>
   </div>
 </template>
@@ -27,19 +30,16 @@ import TodoModal from '@/components/TodoModal'
 export default {
   name: "TodoAdd",
   components: { TodoInput, TodoButton, TodoModal },
-  props: {
-
-  },
   data() {
     return {
       text: null,
-      modalOpen: this.$store.state.Todo.modal
+      modalActive: false
     }
   },
   methods: {
     listAdd: function () {
       if( this.text === null ) {
-        this.$store.dispatch('Todo/modalOpen');
+        this.modalActive = true
       } else {
         let todo = {
           title: this.text,
@@ -50,13 +50,7 @@ export default {
         this.text = null
       }
     },
-    modalClose() {
-      this.modalOpen = false
-    }
   },  
-  mounted() {
-    console.log('todoadd 상태', this.$store.state.Todo.modal)
-  }
 }
 </script>
 
@@ -64,12 +58,31 @@ export default {
 /* input area */
 .todo-add {
   position: relative;
-  button {
+  .button {
     position: absolute;
     top: 0;
     right: 10px;
     bottom: 0;
     margin: auto;
+  }
+}
+
+// modal 
+.modal-content {
+  p {
+    padding: 15px 0 30px;
+    font-size: 16px;
+    text-align: center;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    width: 75px;
+    height: 35px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #ee5753;
+    border-radius: 10px;
   }
 }
 </style>

@@ -20,12 +20,23 @@
         <button @click="setFilter('completed')" :class="{active: listFilter === 'completed'}">Completed</button>
       </div>
       <div class="btn-del">
-        <button @click="listClearAll">Clear All</button>
+        <button @click="modalActive = true">Clear All</button>
       </div>
     </div>
     <!-- list에 대한 컨트롤 부분 (e) -->
 
     <TodoList :list="todoList"/>
+
+    <!-- modal -->
+    <todo-modal
+      v-show="modalActive"
+      @close="modalActive = false">
+      <p>전부 삭제하시겠어요?</p>
+      <button 
+        @click="listClearAll(item)"
+      >OK</button>
+    </todo-modal>
+
   </base-layout>
 </template>
 
@@ -34,17 +45,19 @@ import BaseLayout from '@/layouts/todo/Index'
 import TodoAdd from '@/components/TodoAdd'
 import TodoSelect from '@/components/TodoSelect'
 import TodoList from '@/components/TodoList'
+import TodoModal from '@/components/TodoModal'
 
 export default {
   name: "Todo",
   components: {
-    BaseLayout, TodoAdd, TodoSelect, TodoList
+    BaseLayout, TodoAdd, TodoSelect, TodoList, TodoModal
   },
   data() {
     return {
       am: 'Good morning!',
       pm: 'Good afternoon!',
       listFilter: this.$store.state.Todo.listFilter,
+      modalActive: false,
     }
   },
   computed: {
@@ -73,6 +86,7 @@ export default {
     },
     listClearAll() {
       this.$store.dispatch('Todo/clearAll')
+      this.modalActive = false
     },
   },
   mounted() {
@@ -136,4 +150,22 @@ export default {
   }
 }
 
+// modal 
+.modal-content {
+  p {
+    padding: 15px 0 30px;
+    font-size: 16px;
+    text-align: center;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    width: 75px;
+    height: 35px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #ee5753;
+    border-radius: 10px;
+  }  
+}
 </style>

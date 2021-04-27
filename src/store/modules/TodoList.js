@@ -14,7 +14,6 @@ export default {
             {option: "최신순", type: "orderDesc", selected: false},
             {option: "오래된순", type: "orderAsc", selected: true},
         ],
-        modal: false
     },
     getters: {
         getTodoList(state) {
@@ -118,10 +117,6 @@ export default {
             // todolist 객체를 문자열로 만들어 로컬 스토리지에 저장
             localStorage.setItem("todo-list", JSON.stringify(state.list))
         },
-        modalOpen(state) {
-            state.modal = true
-            console.log('store modal 상태', state.modal)
-        }
     },
     actions: {
         setFilter({commit}, filter) {
@@ -166,10 +161,5 @@ export default {
         toggleTodo({commit}, todo) {
             commit("toggleTodo", todo)
         },
-
-        // Modal 오픈
-        modalOpen({commit}) {
-            commit("modalOpen")
-        }
     },
 }

@@ -16,18 +16,6 @@
 <script>
 export default {
   name: "TodoModal",
-  data() {
-    return {
-
-    }
-  },
-  props: {
-
-  },
-  methods: {
-
-  }
-  
 }
 </script>
 
@@ -52,12 +40,12 @@ export default {
 
   .modal-box {
     position: relative;
-		width: 80%;
+		width: 60%;
 		z-index: 9999;
     .btn-close {
       position: absolute;
-      width: 20px;
-      height: 20px;
+      width: 14px;
+      height: 14px;
       top: 20px;
       right: 20px;
       font-size: 0;
@@ -71,7 +59,7 @@ export default {
         bottom: 0;
         left: 0;
         margin: auto;
-        background-color: #000;
+        background-color: #ee5753;
       }
       &::before {        
         width: 2px;
@@ -83,10 +71,10 @@ export default {
       }
     }
     .modal-content {
-			padding-top: 35px;
-			padding-bottom: 50px;
+			padding: 35px 0;
+      color: #000;
 			background-color: #fff;
-			border-radius: 30px;
+			border-radius: 25px;
 		}	
   }
 }
@@ -107,7 +95,7 @@ export default {
 
     .modal-box {
         opacity: 0;
-        transform: translateY(-30px);
+        transform: translateY(-10px);
     }
 }
 </style>
