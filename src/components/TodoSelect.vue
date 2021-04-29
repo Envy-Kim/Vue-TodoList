@@ -1,16 +1,13 @@
 <template>
   <div class="order-select">
-    <select @change="orderByDate($event, $event.target.selectedIndex)">
+    <select @input="change">
       <option
-          v-for="(item, index) in listSelect"
-          :key="`key-${index}`"
-          :value="item.type"
-          :selected="item.selected"
-      >{{ item.option }}
-      </option
-      >
-      <!-- <option value="orderDesc" selected>최신 순</option>
-      <option value="orderAsc">오래된 순</option> -->
+          v-for="(item, index) in options"
+          :key="index"
+          :value="item.value"
+          :selected="(item.value === value)"
+      >{{ item.label }}
+      </option>
     </select>
   </div>
 </template>
@@ -18,18 +15,18 @@
 <script>
 export default {
   name: "TodoSelect",
-  methods: {
-    orderByDate(event, selectedIndex) {
-      if (event.target.value === "orderDesc") {
-        this.$store.dispatch("Todo/orderByDateDesc", selectedIndex)
-      } else if (event.target.value === "orderAsc") {
-        this.$store.dispatch("Todo/orderByDateAsc", selectedIndex)
-      }
+  props: {
+    options: {
+      type: Array,
+      required: true,
     },
+    value: {
+      type: String,
+    }
   },
-  computed: {
-    listSelect() {
-      return this.$store.getters["Todo/getTodoSelect"]
+  methods: {
+    change(e) {
+      this.$emit('input', e.target.value)
     },
   },
 }

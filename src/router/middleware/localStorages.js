@@ -7,8 +7,8 @@ export function checkLocalStorages(to, from, next) {
     if (localStorage.getItem("todo-list")) {
         store.dispatch("Todo/setTodoList", JSON.parse(localStorage.getItem("todo-list")));
     }
-    if (localStorage.getItem("todo-select")) {
-        store.dispatch("Todo/setSelect", JSON.parse(localStorage.getItem("todo-select")));
+    if (localStorage.getItem("todo-orderby")) {
+        store.dispatch("Todo/setOrderBy", localStorage.getItem("todo-orderby"));
     }
     next();
 }

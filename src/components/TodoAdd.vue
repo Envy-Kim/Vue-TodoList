@@ -12,7 +12,7 @@
 
     <!-- modal -->
     <todo-modal
-        v-show="modalActive"
+        v-show="modalActive === true"
         :width="(($device.windows) ? 15 : 60)"
         :unit="'%'"
         @close="modalActive = false">
@@ -32,15 +32,20 @@ export default {
   components: {TodoInput, TodoButton, TodoModal},
   data() {
     return {
-      text: null,
-      modalActive: false,
+      text: '',
+      modalActive: {
+        type: Boolean,
+        default: false,
+      },
+      isClear: {
+        type: Boolean,
+        default: false,
+      },
     }
   },
   methods: {
     listAdd: function () {
-      if (this.text === null) {
-        this.modalActive = true
-      } else if(this.text.trim() === '') {
+      if(this.text.trim() === '') {
         this.text = ''
         this.modalActive = true
       } else {
@@ -50,7 +55,7 @@ export default {
           created_at: this.$moment()
         }
         this.$store.dispatch('Todo/addTodo', todo)
-        this.text = null
+        this.text = ''
       }
     },
   },

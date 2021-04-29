@@ -10,10 +10,7 @@ export default {
          */
         list: [],
         listFilter: "all",
-        listSelect: [
-            {option: "최신순", type: "orderDesc", selected: false},
-            {option: "오래된순", type: "orderAsc", selected: true},
-        ],
+        orderBy: "desc",
     },
     getters: {
         getTodoList(state) {
@@ -33,9 +30,6 @@ export default {
         getCountCompletedList(state) {
             return state.list.filter((item) => item.completed).length
         },
-        getTodoSelect(state) {
-            return state.listSelect
-        },
     },
     mutations: {
         setFilter(state, filter) {
@@ -44,9 +38,8 @@ export default {
         setTodoList(state, todoList) {
             state.list = todoList
         },
-        setSelect(state, todoSelect) {
-            localStorage.setItem("todo-select", JSON.stringify(state.listSelect))
-            state.listSelect = todoSelect
+        setOrderBy(state, orderBy) {
+            state.orderBy = orderBy
         },
         toggleTodo(state, todo) {
             const index = state.list.indexOf(todo)
@@ -59,44 +52,25 @@ export default {
         listClearAll(state) {
             state.list.splice(0)
         },
-        orderByDateAsc(state, selectIndex) {
-            state.list.sort(function (a, b) {
-                // 오름차순
-                return a.created_at < b.created_at
-                    ? -1
-                    : a.created_at > b.created_at
-                        ? 1
-                        : 0
-            })
-            for (let i = 0; i < state.listSelect.length; i++) {
-                if (selectIndex === i) {
-                    state.listSelect[i].selected = true
+        listSort(state) {
+            if(state.list.length > 0) {
+                console.log('sort mutation')
+                if(state.orderBy === 'asc') {
+                    console.log('sort asc')
+                    state.list.sort(function (a, b) {
+                        return new Date(a.created_at) - new Date(b.created_at)
+                    })
                 } else {
-                    state.listSelect[i].selected = false
+                    console.log('sort desc')
+                    state.list.sort(function (a, b) {
+                        return new Date(b.created_at) - new Date(a.created_at)
+                    })
                 }
+                localStorage.setItem("todo-list", JSON.stringify(state.list))
             }
-            localStorage.setItem("todo-select", JSON.stringify(state.listSelect))
-        },
-        orderByDateDesc(state, selectIndex) {
-            state.list.sort(function (a, b) {
-                // 내립차순
-                return a.created_at > b.created_at
-                    ? -1
-                    : a.created_at < b.created_at
-                        ? 1
-                        : 0
-            })
-            for (let i = 0; i < state.listSelect.length; i++) {
-                if (selectIndex === i) {
-                    state.listSelect[i].selected = true
-                } else {
-                    state.listSelect[i].selected = false
-                }
-            }
-            localStorage.setItem("todo-select", JSON.stringify(state.listSelect))
         },
         addTodo(state, item) {
-            if (state.listSelect[0].selected === true) {
+            if (state.orderBy === "asc") {
                 state.list.unshift(item)
             } else {
                 state.list.push(item)
@@ -113,18 +87,13 @@ export default {
             commit("setTodoList", todoList)
         },
 
-        setSelect({commit}, selectList) {
-            commit("setSelect", selectList)
-        },
+        setOrderBy({commit}, item) {
+            // 정렬값 저장
+            commit("setOrderBy", item)
+            // 리스트 정렬
+            commit('listSort')
 
-        // 날짜 정렬(오름차순) // action을 사용하지 않고 getter에 만들어서 호출하는 방법도 있음
-        orderByDateAsc({commit}, selectIndex) {
-            commit("orderByDateAsc", selectIndex)
-        },
-
-        // 날짜 정렬(내림차순)
-        orderByDateDesc({commit}, selectIndex) {
-            commit("orderByDateDesc", selectIndex)
+            localStorage.setItem("todo-orderby", item)
         },
 
         // 데이터 추가

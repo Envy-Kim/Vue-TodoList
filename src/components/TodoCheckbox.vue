@@ -53,7 +53,7 @@ export default {
         // 다중선택 체크박스인 경우 값을 배열로 반환
 
         // v-model과 연결된 value(Array)를 checkArr 배열에 할당
-        let checkArr = this.inputValue
+        let checkArr = [...this.inputValue]
 
         // 선택된 체크박스의 값을 checkArr에 push
         if ($event.target.checked) {
