@@ -1,3 +1,5 @@
+import axiosAuth from '@/store/api/BaseAxios';
+
 export default {
     namespaced: true,
     state: {
@@ -83,8 +85,13 @@ export default {
             commit("setFilter", filter)
         },
 
-        setTodoList({commit}, todoList) {
-            commit("setTodoList", todoList)
+        setTodoList({ commit }, todoList) {
+            // commit("setTodoList", todoList)
+            return axiosAuth().get(`/api/v1/todos/${todoList}`)
+                .then(data => {
+                    commit('setTodoList', data);
+                    console.log('클릭');
+                });
         },
 
         setOrderBy({commit}, item) {
