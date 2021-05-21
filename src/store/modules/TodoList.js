@@ -1,4 +1,4 @@
-import axiosAuth from '@/store/api/BaseAxios';
+import $axios from '@/store/api/BaseAxios';
 
 export default {
     namespaced: true,
@@ -85,14 +85,21 @@ export default {
             commit("setFilter", filter)
         },
 
-        setTodoList({ commit }, todoList) {
-            // commit("setTodoList", todoList)
-            return axiosAuth().get(`/api/v1/todos/${todoList}`)
-                .then(data => {
-                    commit('setTodoList', data);
-                    console.log('클릭');
-                });
-        },
+        async setTodoList({ commit }, todoList) {
+            return await $axios.get(`/api/v1/todos/${todoList}`,
+                {
+                    params: {
+                        todoList : todoList
+                    }
+                }
+            )
+                .then(response =>{
+                    commit('setTodoList', response.data.data)
+                })
+                .catch(error => {
+                    console.log('error ::' + error);
+                })
+        }, 
 
         setOrderBy({commit}, item) {
             // 정렬값 저장
