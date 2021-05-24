@@ -1,4 +1,4 @@
-import $axios from '@/store/api/BaseAxios';
+import {axiosDefault} from '@/store/api/BaseAxios'
 
 export default {
     namespaced: true,
@@ -57,9 +57,8 @@ export default {
             state.list.splice(0)
         },
         listSort(state) {
-            if(state.list.length > 0) {
-                console.log('sort mutation')
-                if(state.orderBy === 'asc') {
+            if (state.list.length > 0) {
+                if (state.orderBy === 'asc') {
                     console.log('sort asc')
                     state.list.sort(function (a, b) {
                         return new Date(a.created_at) - new Date(b.created_at)
@@ -85,21 +84,17 @@ export default {
             commit("setFilter", filter)
         },
 
-        async setTodoList({ commit }, todoList) {
-            return await $axios.get(`/api/v1/todos/${todoList}`,
-                {
-                    params: {
-                        todoList : todoList
-                    }
-                }
-            )
-                .then(response =>{
-                    commit('setTodoList', response.data.data)
+        async getTodoList({commit}, userId) {
+            return await axiosDefault()
+                .get("/api/v1/todos/" + userId)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
                 })
-                .catch(error => {
-                    console.log('error ::' + error);
+                .then((res) => {
+                    commit("setTodoList", res.data)
                 })
-        }, 
+        },
 
         setOrderBy({commit}, item) {
             // 정렬값 저장
