@@ -106,8 +106,20 @@ export default {
         },
 
         // 데이터 추가
-        addTodo({commit}, item) {
-            commit("addTodo", item)
+        // addTodo({commit}, item) {
+        //     commit("addTodo", item)
+        // },
+        async addTodo({ commit }, item) {
+            return await axiosDefault()
+                .post("/api/v1/todos/2", { item })
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    commit("addTodo", res.data)
+                    console.log(res.data)
+                })
         },
 
         // 전체 삭제.
