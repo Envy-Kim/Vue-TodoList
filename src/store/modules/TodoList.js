@@ -77,7 +77,7 @@ export default {
             } else {
                 state.list.push(item)
             }
-            console.log('item::', item)
+            
         },
     },
     actions: {
@@ -115,12 +115,8 @@ export default {
                 })
                 .then((res) => {
                     commit("addTodo", res.data)
-                    console.log('post item', item)
                 })            
         },
-        // addTodo({commit}, item) {
-        //     commit("addTodo", item)
-        // },
 
         // 전체 삭제.
         clearAll({commit}) {
