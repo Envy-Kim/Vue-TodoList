@@ -1,20 +1,18 @@
 <template>
   <div class="todo">
-    <div class="view" :class="{completed: item.completed}">
+    <div class="view" :class="{completed: (item.state === 2)}">
       <TodoCheckbox
-          :label="item.title"
-          v-model="item.completed"
+          :label="item.text"
+          v-model="completed"
           @input="toggleCompleted(item)"
       />
-      <span class="save-time">{{ $moment(item.created_at).format('MM/DD HH:mm:ss(ddd)') }}</span>
+      <span class="save-time">{{ item.created_at }}</span>
     </div>
     <button class="destroy" @click="modalActive = true"></button>
 
     <!-- modal -->
     <todo-modal
         v-show="modalActive"
-        :width="(($device.windows) ? 15 : 60)"
-        :unit="'%'"
         @close="modalActive = false">
       <p>정말로 삭제하시겠어요?</p>
 
@@ -44,6 +42,16 @@ export default {
   data() {
     return {
       modalActive: false,
+    }
+  },
+  computed: {
+    completed: {
+      get() {
+        return (this.item.state === 2)
+      },
+      set(newValue) {
+        this.item.state = (newValue) ? 2 : 1
+      }
     }
   },
   methods: {

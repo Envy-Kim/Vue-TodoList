@@ -1,14 +1,19 @@
+import {axiosDefault} from '@/store/api/BaseAxios'
+
 export default {
     namespaced: true,
     state: {
         /**
          * list: [{
-         *     title: String,
-         *     completed: Boolean,
-         *     created_at: Date
+         *     id: Number, // 각 todoslit의 id(할일 아이디) : device의 고유번호를 넣어주면 됨. axios get 테스트 시에는 1을 사용
+         *     text: String, // 할일 내용, 기존의 title
+         *     state: Number, // 상태값(1: 미완료, 2: 완료)
+         *     created_at: String, // 생성일시(format: 2021-05-13 08:57:55)
+         *     updated_at: String, // 수정일시(format: 2021-05-13 09:06:16)
          * }]
          */
         list: [],
+        userId: 1,
         listFilter: "all",
         orderBy: "desc",
     },
@@ -17,9 +22,9 @@ export default {
             let todoList = state.list
 
             if (state.listFilter === "active") {
-                todoList = state.list.filter((item) => !item.completed)
+                todoList = state.list.filter((item) => item.state === 1)
             } else if (state.listFilter === "completed") {
-                todoList = state.list.filter((item) => item.completed)
+                todoList = state.list.filter((item) => item.state === 2)
             }
 
             return todoList
@@ -28,10 +33,13 @@ export default {
             return state.list.length
         },
         getCountCompletedList(state) {
-            return state.list.filter((item) => item.completed).length
+            return state.list.filter((item) => item.state === 2).length
         },
     },
     mutations: {
+        setUserId(state, userId) {
+            state.userId = userId
+        },
         setFilter(state, filter) {
             state.listFilter = filter
         },
@@ -43,7 +51,7 @@ export default {
         },
         toggleTodo(state, todo) {
             const index = state.list.indexOf(todo)
-            if (index > -1) state.list[index].completed = todo.completed
+            if (index > -1) state.list[index].state = todo.state
         },
         removeTodo(state, todo) {
             const index = state.list.indexOf(todo)
@@ -53,9 +61,8 @@ export default {
             state.list.splice(0)
         },
         listSort(state) {
-            if(state.list.length > 0) {
-                console.log('sort mutation')
-                if(state.orderBy === 'asc') {
+            if (state.list.length > 0) {
+                if (state.orderBy === 'asc') {
                     console.log('sort asc')
                     state.list.sort(function (a, b) {
                         return new Date(a.created_at) - new Date(b.created_at)
@@ -66,11 +73,10 @@ export default {
                         return new Date(b.created_at) - new Date(a.created_at)
                     })
                 }
-                localStorage.setItem("todo-list", JSON.stringify(state.list))
             }
         },
         addTodo(state, item) {
-            if (state.orderBy === "asc") {
+            if (state.orderBy === "desc") {
                 state.list.unshift(item)
             } else {
                 state.list.push(item)
@@ -78,13 +84,39 @@ export default {
         },
     },
     actions: {
-        setFilter({commit}, filter) {
-            commit("setFilter", filter)
-            localStorage.setItem("todo-filter", filter)
+        setUserId({commit}, userId) {
+            commit("setUserId", userId)
         },
 
-        setTodoList({commit}, todoList) {
-            commit("setTodoList", todoList)
+        setFilter({commit}, filter) {
+            commit("setFilter", filter)
+        },
+
+        async getUserId({commit}) {
+            return await axiosDefault()
+                .post("/api/v1/user")
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    console.log("post userId 생성 :: " + res.message)
+                    commit("setUserId", res.data.user_id)
+                })
+        },
+
+        async getTodoList({commit, state}) {
+            return await axiosDefault()
+                .get(`/api/v1/todos/${state.userId}`)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    console.log("get todoList 조회 :: " + res.success)
+                    commit("setTodoList", res.data)
+                    commit("listSort")
+                })
         },
 
         setOrderBy({commit}, item) {
@@ -97,23 +129,68 @@ export default {
         },
 
         // 데이터 추가
-        addTodo({commit}, item) {
-            commit("addTodo", item)
+        // eslint-disable-next-line no-unused-vars
+        async addTodo({commit, state}, item) {
+            await axiosDefault()
+                .post(`/api/v1/todos/${state.userId}`, item)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    console.log("post 추가 :: " + res.message)
+                    /*
+                    created_at 값이 서버에서 생성되는 값과 클라이언트에서 만들어지는 값이 달라서
+                    commit을 사용하지 않고 데이터를 다시 가져옴.
+                     */
+                    //commit("addTodo", item)
+                    this.dispatch('Todo/getTodoList')
+                })
         },
 
         // 전체 삭제.
-        clearAll({commit}) {
+        async clearAll({commit, state}) {
+            for (const item of state.list) {
+                await axiosDefault()
+                    .delete(`/api/v1/todos/${item.id}`)
+                    .catch((err) => {
+                        // handle error
+                        console.log("error :: " + err)
+                    })
+                    .then((res) => {
+                        console.log("delete 삭제 :: " + res.message)
+                    })
+            }
             commit("listClearAll")
         },
 
         // list item 하나에 대한 삭제
-        removeTodo({commit}, todo) {
-            commit("removeTodo", todo)
+        async removeTodo({commit}, todo) {
+            await axiosDefault()
+                .delete(`/api/v1/todos/${todo.id}`)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    console.log("delete 삭제 :: " + res.message)
+                    commit("removeTodo", todo)
+                })
         },
 
         // 리스트 아이템 토글
-        toggleTodo({commit}, todo) {
-            commit("toggleTodo", todo)
+        // eslint-disable-next-line no-unused-vars
+        async toggleTodo({commit}, todo) {
+            return await axiosDefault()
+                .patch(`/api/v1/todos/${todo.id}`, todo)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    console.log("patch 토글 :: " + res.message)
+                    commit("toggleTodo", todo)
+                })
         },
     },
 }

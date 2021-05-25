@@ -15,7 +15,6 @@
     <div class="btn-box">
       <TodoSelect :options="options"
                   v-model="orderBy"
-                  @change.native="setOrderBy"
       />
 
       <div class="filter-box">
@@ -34,8 +33,6 @@
     <!-- modal -->
     <todo-modal
         v-show="modalActive"
-        :width="(($device.windows) ? 15 : 60)"
-        :unit="'%'"
         @close="modalActive = false">
       <p>전부 삭제하시겠어요?</p>
       <div class="btn-wrap">
@@ -82,8 +79,13 @@ export default {
     listFilter() {
       return this.$store.state.Todo.listFilter
     },
-    orderBy() {
-      return this.$store.state.Todo.orderBy
+    orderBy: {
+      get() {
+        return this.$store.state.Todo.orderBy
+      },
+      set(newValue) {
+        this.$store.dispatch('Todo/setOrderBy', newValue)
+      }
     },
     todoList() {
       /**
@@ -102,7 +104,7 @@ export default {
       return this.$store.getters["Todo/getCountCompletedList"]
     },
     message() {
-      const now = this.$moment().format('A');
+      const now = this.$moment().format('A')
       if (now === '오전') {
         return this.am
       } else {
@@ -118,9 +120,6 @@ export default {
       this.$store.dispatch('Todo/clearAll')
       this.modalActive = false
     },
-    setOrderBy() {
-      this.$store.dispatch('Todo/setOrderBy', this.orderBy)
-    }
   },
 }
 </script>
