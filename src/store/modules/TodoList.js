@@ -133,8 +133,16 @@ export default {
         },
 
         // 리스트 아이템 토글
-        toggleTodo({commit}, todo) {
-            commit("toggleTodo", todo)
+        async toggleTodo({commit}, todo) {
+            return await axiosDefault()
+                .patch("/api/v1/todos/" + todo.id, todo)
+                .catch((err) => {
+                    // handle error
+                    console.log("error :: " + err)
+                })
+                .then((res) => {
+                    commit("toggleTodo", res.data)
+                })
         },
     },
 }
