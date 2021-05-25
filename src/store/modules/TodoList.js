@@ -106,19 +106,15 @@ export default {
         },
 
         // 데이터 추가
-        // addTodo({commit}, item) {
-        //     commit("addTodo", item)
-        // },
         async addTodo({ commit }, item) {
+            console.log('item', item)
             return await axiosDefault()
-                .post("/api/v1/todos/2", { item })
+                .post("/api/v1/todos/2", item)
                 .catch((err) => {
-                    // handle error
                     console.log("error :: " + err)
                 })
                 .then((res) => {
                     commit("addTodo", res.data)
-                    console.log(res.data)
                 })
         },
 
