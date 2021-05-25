@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://api.stickinteractive.com'
+const BASE_URL = 'https://api.stickinteractive.com'
 
 const DEFAULT_HEADERS = {
     'Content-Type': 'application/json',
