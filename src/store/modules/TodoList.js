@@ -105,12 +105,11 @@ export default {
             localStorage.setItem("todo-orderby", item)
         },
 
-        // 데이터 추가
-        async addTodo({ commit }, item) {
-            console.log('item', item)
+        async addTodo({commit}, item) {
             return await axiosDefault()
                 .post("/api/v1/todos/2", item)
                 .catch((err) => {
+                    // handle error
                     console.log("error :: " + err)
                 })
                 .then((res) => {
