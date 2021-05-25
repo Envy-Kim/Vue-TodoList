@@ -1,4 +1,4 @@
-import {axiosDefault} from '@/store/api/BaseAxios'
+import { axiosDefault } from "@/store/api/BaseAxios";
 
 export default {
     namespaced: true,
@@ -22,11 +22,10 @@ export default {
             let todoList = state.list
 
             if (state.listFilter === "active") {
-                todoList = state.list.filter((item) => item.state === 1)
+              todoList = state.list.filter((item) => item.state === 1);
             } else if (state.listFilter === "completed") {
-                todoList = state.list.filter((item) => item.state === 2)
+              todoList = state.list.filter((item) => item.state === 2);
             }
-
             return todoList
         },
         getCountAllList(state) {
@@ -119,15 +118,15 @@ export default {
                 })
         },
 
-        setOrderBy({commit}, item) {
-            // 정렬값 저장
-            commit("setOrderBy", item)
-            // 리스트 정렬
-            commit('listSort')
+        setOrderBy({ commit }, item) {
+          // 정렬값 저장
+          commit("setOrderBy", item);
+          // 리스트 정렬
+          commit("listSort");
 
-            localStorage.setItem("todo-orderby", item)
+          localStorage.setItem("todo-orderby", item);
         },
-
+      
         // 데이터 추가
         // eslint-disable-next-line no-unused-vars
         async addTodo({commit, state}, item) {
@@ -150,18 +149,14 @@ export default {
 
         // 전체 삭제.
         async clearAll({commit, state}) {
-            for (const item of state.list) {
+            for (const todo of state.list) {
                 await axiosDefault()
-                    .delete(`/api/v1/todos/${item.id}`)
-                    .catch((err) => {
-                        // handle error
-                        console.log("error :: " + err)
-                    })
+                    .delete(`/api/v1/todos/${todo.id}`)
                     .then((res) => {
                         console.log("delete 삭제 :: " + res.message)
                     })
             }
-            commit("listClearAll")
+            await commit("listClearAll")
         },
 
         // list item 하나에 대한 삭제
