@@ -17,9 +17,24 @@ export const TodoPlugin = store => {
         }
     })
 
-    store.subscribeAction((action) => {
-        if (action.type === "Todo/addTodo") {
-            //console.log('추가')
+    let axiosAction = ['Todo/addTodo', 'Todo/removeTodo', 'Todo/toggleTodo', 'Todo/clearAll', 'Todo/getTodoList']
+
+    store.subscribeAction({
+        before(action, state) {
+            if(axiosAction.includes(action.type)) {
+                console.log(action.type)
+                console.log(state.Todo.loadingState)
+                store.commit('Todo/setLoadingState', true)
+            }
+        },
+        after(action, state) {
+            if(axiosAction.includes(action.type)) {
+                console.log(action.type)
+                console.log(state.Todo.loadingState)
+                setTimeout(()=>{
+                    store.commit('Todo/setLoadingState', false);
+                }, 300);
+            }
         }
     })
 }

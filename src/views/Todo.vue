@@ -43,6 +43,9 @@
       </div>
     </todo-modal>
 
+    <!-- Spinner -->
+    <Spinner/>
+
   </base-layout>
 </template>
 
@@ -52,11 +55,12 @@ import TodoAdd from '@/components/TodoAdd'
 import TodoSelect from '@/components/TodoSelect'
 import TodoList from '@/components/TodoList'
 import TodoModal from '@/components/TodoModal'
+import Spinner from '@/components/Spinner'
 
 export default {
   name: "Todo",
   components: {
-    BaseLayout, TodoAdd, TodoSelect, TodoList, TodoModal
+    BaseLayout, TodoAdd, TodoSelect, TodoList, TodoModal, Spinner
   },
   data() {
     return {

@@ -16,6 +16,7 @@ export default {
         userId: 1,
         listFilter: "all",
         orderBy: "desc",
+        loadingState: false,
     },
     getters: {
         getTodoList(state) {
@@ -47,6 +48,9 @@ export default {
         },
         setOrderBy(state, orderBy) {
             state.orderBy = orderBy
+        },
+        setLoadingState(state, loadingState) {
+            state.loadingState = loadingState
         },
         toggleTodo(state, todo) {
             const index = state.list.indexOf(todo)
@@ -123,8 +127,6 @@ export default {
           commit("setOrderBy", item);
           // 리스트 정렬
           commit("listSort");
-
-          localStorage.setItem("todo-orderby", item);
         },
       
         // 데이터 추가
