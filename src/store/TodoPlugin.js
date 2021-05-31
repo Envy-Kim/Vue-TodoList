@@ -24,16 +24,16 @@ export const TodoPlugin = store => {
             if(axiosAction.includes(action.type)) {
                 console.log(action.type)
                 console.log(state.Todo.loadingState)
-                store.commit('Todo/setLoadingState', true)
+                //store.commit('Todo/setLoadingState', true)
             }
         },
         after(action, state) {
             if(axiosAction.includes(action.type)) {
                 console.log(action.type)
                 console.log(state.Todo.loadingState)
-                setTimeout(()=>{
-                    store.commit('Todo/setLoadingState', false);
-                }, 300);
+                /*setTimeout(()=>{
+                    store.commit('Todo/setLoadingState', false)
+                }, 300)*/
             }
         }
     })
