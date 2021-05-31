@@ -1,4 +1,4 @@
-import { axiosDefault } from "@/store/api/BaseAxios";
+import {axiosDefault} from "@/store/api/BaseAxios"
 
 export default {
     namespaced: true,
@@ -23,9 +23,9 @@ export default {
             let todoList = state.list
 
             if (state.listFilter === "active") {
-              todoList = state.list.filter((item) => item.state === 1);
+                todoList = state.list.filter((item) => item.state === 1)
             } else if (state.listFilter === "completed") {
-              todoList = state.list.filter((item) => item.state === 2);
+                todoList = state.list.filter((item) => item.state === 2)
             }
             return todoList
         },
@@ -122,13 +122,13 @@ export default {
                 })
         },
 
-        setOrderBy({ commit }, item) {
-          // 정렬값 저장
-          commit("setOrderBy", item);
-          // 리스트 정렬
-          commit("listSort");
+        setOrderBy({commit}, item) {
+            // 정렬값 저장
+            commit("setOrderBy", item)
+            // 리스트 정렬
+            commit("listSort")
         },
-      
+
         // 데이터 추가
         // eslint-disable-next-line no-unused-vars
         async addTodo({commit, state}, item) {
@@ -188,6 +188,10 @@ export default {
                     console.log("patch 토글 :: " + res.message)
                     commit("toggleTodo", todo)
                 })
+        },
+
+        setLoadingState({commit}, isLoading) {
+            commit("setLoadingState", isLoading)
         },
     },
 }

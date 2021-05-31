@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import TodoListItem from "@/components/TodoListItem";
+import TodoListItem from "@/components/TodoListItem"
 
 export default {
   name: "TodoList",
@@ -20,7 +20,7 @@ export default {
       type: Array,
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
